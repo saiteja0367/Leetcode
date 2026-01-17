@@ -1,60 +1,22 @@
 class Solution:
     def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
-        prereq = {c: [] for c in range(numCourses)}
-        for crs, pre in prerequisites:
-            prereq[crs].append(pre)
-
-        output = []
-        visit, cycle = set(), set()
-
-        def dfs(crs):
-            if crs in cycle:
-                return False
-            if crs in visit:
-                return True
-
-            cycle.add(crs)
-            for pre in prereq[crs]:
-                if dfs(pre) == False:
-                    return False
-            cycle.remove(crs)
-            visit.add(crs)
-            output.append(crs)
-            return True
-
-        for c in range(numCourses):
-            if dfs(c) == False:
-                return []
-        return output
-
-
-
-
-    #     class Solution:
-    # def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
-    #     from collections import defaultdict, deque
-
-    #     graph = defaultdict(list)
-    #     indegree = [0] * numCourses
-
-    #     for course, pre in prerequisites:
-    #         graph[pre].append(course)
-    #         indegree[course] += 1
-
-    #     queue = deque()
-    #     for i in range(numCourses):
-    #         if indegree[i] == 0:
-    #             queue.append(i)
-
-    #     output = []
-
-    #     while queue:
-    #         course = queue.popleft()
-    #         output.append(course)
-
-    #         for next_course in graph[course]:
-    #             indegree[next_course] -= 1
-    #             if indegree[next_course] == 0:
-    #                 queue.append(next_course)
-
-    #     return output if len(output) == numCourses else []
+        prereqMap = {i: [] for i in range(numCourses)}
+        indegree = [0] * numCourses   
+        for i, j in prerequisites:
+            prereqMap[j].append(i)
+            indegree[i] += 1
+        def bfs():
+            q = deque()
+            for i in range(numCourses):
+                if indegree[i] == 0:
+                    q.append(i)
+            taken = []  
+            while q:
+                curr = q.popleft()
+                taken.append(curr) 
+                for nei in prereqMap[curr]:
+                    indegree[nei] -= 1
+                    if indegree[nei] == 0:
+                        q.append(nei)
+            return taken if len(taken) == numCourses else []   
+        return bfs()
