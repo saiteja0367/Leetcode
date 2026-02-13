@@ -11,6 +11,10 @@ class Solution:
                     dfs(neighbor)
         dfs(0)
         return len(visited)==len(rooms)
+
+
+        #t.c->o(n+e)~=o(n)
+        #s.c->o(n)
                 
 
 
