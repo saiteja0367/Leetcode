@@ -3,9 +3,9 @@ class Solution:
         graph={}
         for i in range(len(friends)):
             graph[i]=friends[i]
-        visited=set()
-        queue=deque()
         def bfs(i):
+            visited=set()
+            queue=deque()
             current_level=0
             queue.append(i)
             visited.add(i)
