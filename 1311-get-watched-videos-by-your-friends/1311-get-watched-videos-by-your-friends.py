@@ -16,8 +16,8 @@ class Solution:
                     node=queue.popleft()
                     for neighbor in graph[node]:
                         if neighbor not in visited:
-                            queue.append(neighbor)
                             visited.add(neighbor)
+                            queue.append(neighbor)
                 current_level+=1
             freq=Counter()
             for person in queue:
